@@ -1,21 +1,70 @@
-<html>
+<!-- uTube App by John Nguyen (@www.jnguyen.space)-->
+<html ng-app="utubeApp">
+	<head>
+		<title>uTube Playlist</title>
+		<link rel="stylesheet" href="https://bootswatch.com/darkly/bootstrap.min.css"/>
+	</head>
+	<body ng-controller="mainCtrl" >
 
-<head>
+	<!-- Top bar -->
+		<div class="navbar navbar-default">
+			<div class="col-lg-offset-1 col-lg-5">
+				<h1 class="brand">uTube Playlist</h1>
+			<!-- Search Function -->
+				<input class="form-control" type="text" placeholder="Search" ng-model="search"></input>
+				<br>
+			</div>
+		</div>
 
-	<title>uTube Playlist</title>
+	<!-- Video List -->
+		<div class="col-lg-offset-1 col-lg-10">
+			<div class="col-sm-7">
+				<table class="table table-hover table-striped">
+					<thead>
+					<!-- List Headers -->
+						<tr>
+							<th>Points</th>
+							<th>Name</th>
+							<th>Link</th>
+						</tr>
+					</thead>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+				<!-- Insert New Video -->
+					<tbody>
+						<tr>
+							<td></td>
+							<td><input class="form-control" type="text" placeholder="Video Name" ng-model="newVid.name"></input></td>
+							<td><input class="form-control" type="text" placeholder="Video Link" ng-model="newVid.link"></input></td>
+							<td><button ng-click="pushNewVideo()" class="btn btn-info">Submit</button></td>
+						</tr>
+					<!-- Video Iterator -->
+						<tr ng-repeat="link in links | filter:search">
+							<td>{{link.points}}</td>
+							<td>{{link.name}}</td>
+							<td>{{link.link}}</td>
+						<!-- Watch Specified Video Button -->
+							<td><button ng-click="watchVideo(link.link)" class="btn btn-primary">Watch!</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
-</head>
+		<!-- uTube Player -->
+			<div class="col-sm-5">
+				<div id="player" class="col-sm-12"></div>
+			</div>
+		</div>
 
-<body>
 
-	<h1>Youtube Playlist</h1>
-	<h3>Made by John</h3>
+<!-- Javascript Scripts -->
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+		<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+		<script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
 
-
-	<script type="javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script type="javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-</body>
-
+<!-- Custom JS -->
+		<script src="main.js"></script>
+		<script src="utube.js"></script>
+	</body>
 </html>
