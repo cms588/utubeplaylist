@@ -1,69 +1,79 @@
-<!-- uTube App by John Nguyen (@www.jnguyen.space)-->
+<!-- uTube App by John Nguyen (@ www.jnguyen.space)-->
 <html ng-app="utubeApp">
 	<head>
 		<title>uTube Playlist</title>
 		<link rel="stylesheet" href="https://bootswatch.com/darkly/bootstrap.min.css"/>
+		<link rel="stylesheet" href="style.css"/>
 	</head>
 	<body ng-controller="mainCtrl" >
-
-	<!-- Top bar -->
+		<!-- Top bar -->
 		<div class="navbar navbar-default">
 			<div class="col-lg-offset-1 col-lg-5">
 				<h1 class="brand">uTube Playlist</h1>
-			<!-- Search Function -->
+				<!-- Search Function -->
 				<input class="form-control" type="text" placeholder="Search" ng-model="search"></input>
 				<br>
 			</div>
 		</div>
-
-	<!-- Video List -->
+		<!-- Video List -->
 		<div class="col-lg-offset-1 col-lg-10">
 			<div class="col-sm-7">
 				<table class="table table-hover table-striped">
 					<thead>
-					<!-- List Headers -->
+						<!-- List Headers -->
 						<tr>
-							<th>Points</th>
+							<th>Edit</th>
+							<th>Preview</th>
 							<th>Name</th>
 							<th>Link</th>
 						</tr>
 					</thead>
-
-				<!-- Insert New Video -->
+					<!-- Insert New Video -->
 					<tbody>
 						<tr>
 							<td></td>
-							<td><input class="form-control" type="text" placeholder="Video Name" ng-model="newVid.name"></input></td>
-							<td><input class="form-control" type="text" placeholder="Video Link" ng-model="newVid.link"></input></td>
+							<td></td>
+							<td><input id="newVidName" class="form-control" type="text" placeholder="Video Name" ng-model="newVid.name"></input></td>
+							<td>
+								<input id="newVidLink" class="form-control" type="text" placeholder="Video Link" ng-model="newVid.link" ng-keypress="submitVideoInfo($event)"></input>
+							</td>
 							<td><button ng-click="pushNewVideo()" class="btn btn-info">Submit</button></td>
 						</tr>
-					<!-- Video Iterator -->
+						<!-- Video Iterator -->
 						<tr ng-repeat="link in links | filter:search">
-							<td>{{link.points}}</td>
+							<td>
+								<button ng-click="deleteMe(link)" class="btn-danger" style="border: 0; padding:8px; margin-bottom: 10px; border-radius: 20px"><span class="glyphicon glyphicon-remove"aria-hidden="true"></span></button><br>
+								<button ng-click="openEditor(link)" class="btn-info" style="border: 0; padding:8px; border-radius: 20px"><span class="glyphicon glyphicon-pencil rotete90" aria-hidden="true"></span></button>
+							</td>
+							<td><img class="img-responsive" style="max-width: 150px" ng-src="http://img.youtube.com/vi/{{getVideoYoutubeId(link.link)}}/0.jpg"></img></td>
 							<td>{{link.name}}</td>
-							<td>{{link.link}}</td>
-						<!-- Watch Specified Video Button -->
+							<td><a ng-href="{{link.link}}" target="_blank">Link</a></td>
+							<!-- Watch Specified Video Button -->
 							<td><button ng-click="watchVideo(link.link)" class="btn btn-primary">Watch!</button></td>
 						</tr>
 					</tbody>
 				</table>
+				<div id="editDiv" class="editPopup">
+					<button onclick="$('#editDiv').toggle('fast')" class="btn-success" style="border-radius: 20px;float:right">x&nbsp;</button>
+					<h4>Edit</h4>
+					<input type="hidden" ng-model="editedVideoId"></input>
+					<input class="form-control" type="text" ng-model="editedVideoName"></input><br>
+					<input class="form-control" type="text" ng-model="editedVideoLink" ng-keypress="autoEditMe()"></input><br>
+					<input ng-click="editMe()" class="btn btn-info" value="Edit" readonly></input>
+				</div>
 			</div>
-
-		<!-- uTube Player -->
+			<!-- uTube Player -->
 			<div class="col-sm-5">
 				<div id="player" class="col-sm-12"></div>
 			</div>
 		</div>
-
-
-<!-- Javascript Scripts -->
+		<!-- Javascript Scripts -->
 		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 		<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
 		<script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
-
-<!-- Custom JS -->
+		<!-- Custom JS -->
 		<script src="main.js"></script>
 		<script src="utube.js"></script>
 	</body>
