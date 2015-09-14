@@ -16,8 +16,6 @@ app.controller("mainCtrl", function($scope, $firebaseArray) {
         var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
         if (videoid != null) {
     		return videoid[1];
-        } else {
-            alert("The youtube url is not valid!");
         }
     }
 
